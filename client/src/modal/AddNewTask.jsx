@@ -14,7 +14,10 @@ const AddNewTask = ({ isOpen, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/tasks/create", form);
+      await axios.post(
+        "https://server-indol-zeta.vercel.app/tasks/create",
+        form
+      );
       alert("Task saved successfully!");
       onClose();
     } catch (error) {

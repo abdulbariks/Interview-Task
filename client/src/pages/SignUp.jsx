@@ -8,7 +8,7 @@ const SignUp = () => {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post("http://localhost:5000/user/signin", form);
+    await axios.post("https://server-indol-zeta.vercel.app/user/signin", form);
     navigate("/login");
   };
   return (

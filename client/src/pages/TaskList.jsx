@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AddNewTask from "../modal/AddNewTask";
 import axios from "axios";
+import { Link } from "react-router";
 
 const statusStyles = {
   Pending: "text-pink-500 bg-pink-100",
@@ -14,7 +15,7 @@ const TaskList = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/tasks")
+      .get("https://server-indol-zeta.vercel.app/tasks")
       .then((res) => setTasks(res.data))
       .catch((err) => console.error("Error fetching tasks:", err));
   }, []);
@@ -45,47 +46,51 @@ const TaskList = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {tasks.map((task, index) => (
-          <div
-            key={index}
-            className="bg-white border border-gray-200 rounded-lg shadow-sm p-4 flex flex-col justify-between"
-          >
-            <div className="flex items-start justify-between">
-              <div className="w-10 h-10 bg-[#00E396] text-white rounded-full flex items-center justify-center font-bold">
-                K
-              </div>
-              <button className="text-red-400 hover:text-red-600 transition">
-                🗑️
-              </button>
-            </div>
-
-            <h3 className="text-md font-semibold text-gray-900 mt-4">
-              {task.title}
-            </h3>
-            <p className="text-sm text-gray-500 mb-4">{task.description}</p>
-
-            <div className="flex justify-between items-center mt-auto">
-              <div className="flex items-center gap-2 text-sm text-gray-500">
-                {task.user ? (
-                  <img
-                    src={task.user}
-                    alt="user"
-                    className="w-5 h-5 rounded-full"
-                  />
-                ) : (
-                  <span>📅</span>
-                )}
-                <span>{task.date}</span>
+          <Link to={`/task-details/${task._id}`}>
+            <div
+              key={index}
+              className="bg-white border border-gray-200 rounded-lg shadow-sm p-4 flex flex-col justify-between"
+            >
+              <div className="flex items-start justify-between">
+                <div className="w-10 h-10 bg-[#00E396] text-white rounded-full flex items-center justify-center font-bold">
+                  K
+                </div>
+                <button className="text-red-400 hover:text-red-600 transition">
+                  🗑️
+                </button>
               </div>
 
-              <span
-                className={`text-xs px-2 py-1 rounded-full font-medium ${
-                  statusStyles[task.status]
-                }`}
-              >
-                {task.status}
-              </span>
+              <h3 className="text-md font-semibold text-gray-900 mt-4">
+                {task.title}
+              </h3>
+              <p className="text-sm w-11/12 text-gray-500 mb-4">
+                {task.description}
+              </p>
+
+              <div className="flex justify-between items-center mt-auto">
+                <div className="flex items-center gap-2 text-sm text-gray-500">
+                  {task.user ? (
+                    <img
+                      src={task.user}
+                      alt="user"
+                      className="w-5 h-5 rounded-full"
+                    />
+                  ) : (
+                    <span>📅</span>
+                  )}
+                  <span>{task.date}</span>
+                </div>
+
+                <span
+                  className={`text-xs px-2 py-1 rounded-full font-medium ${
+                    statusStyles[task.status]
+                  }`}
+                >
+                  {task.status}
+                </span>
+              </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

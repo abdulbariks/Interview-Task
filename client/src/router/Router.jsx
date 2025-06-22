@@ -7,6 +7,8 @@ import SignUp from "../pages/SignUp";
 import AuthLayout from "../layout/AuthLayout";
 import TaskList from "../pages/TaskList";
 import Spin from "../pages/Spin";
+import TaskDetails from "../pages/TaskDetails";
+import Loading from "../components/Loading";
 
 export const router = createBrowserRouter([
   {
@@ -15,6 +17,13 @@ export const router = createBrowserRouter([
     children: [
       { index: true, Component: Home },
       { path: "task-list", Component: TaskList },
+      {
+        path: "/task-details/:id",
+        hydrateFallbackElement: <Loading></Loading>,
+        loader: ({ params }) =>
+          fetch(`https://server-indol-zeta.vercel.app/tasks/${params.id}`),
+        Component: TaskDetails,
+      },
       { path: "spin", Component: Spin },
     ],
   },

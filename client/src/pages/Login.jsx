@@ -1,20 +1,28 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { Link, useNavigate } from "react-router";
-import { setAuth } from "../auth/auth";
 import axios from "axios";
 import login from "../assets/login.png";
+import { AuthContext } from "../contexts/AuthContext";
+import Loading from "../components/Loading";
 
 const Login = () => {
+  const { setAuth, loading, setLoading } = use(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
+  if (!loading) {
+    return <Loading></Loading>;
+  }
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/user/login", { email, password });
+      await axios.post("https://server-indol-zeta.vercel.app/user/login", {
+        email,
+        password,
+      });
       setAuth({ email });
       navigate("/");
+      setLoading(false);
     } catch (err) {
       console.log(err);
 

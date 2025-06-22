@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <div>
       <TaskList />
-      <Spin />
+      {/* <Spin /> */}
     </div>
   );
 };
